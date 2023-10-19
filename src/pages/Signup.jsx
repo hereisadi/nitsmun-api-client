@@ -1,11 +1,11 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 const Signup = () => {
 
-    const [email,setEmail] = useState("")
-    const [name,setName] = useState("")
-    const [password,setPassword] = useState("")
-    const [cPassword,setCPassword] = useState("")
+    const [email, setEmail] = useState("")
+    const [name, setName] = useState("")
+    const [password, setPassword] = useState("")
+    const [confirmPassword, setconfirmPassword] = useState("")
 
     const handleEmail = (e) => {
         setEmail(e.target.value)
@@ -15,25 +15,52 @@ const Signup = () => {
         setPassword(e.target.value)
     }
 
-    const handleCPassword = (e) => {
-        setCPassword(e.target.value)
+    const handleconfirmPassword = (e) => {
+        setconfirmPassword(e.target.value)
     }
 
     const handleName = (e) => {
         setName(e.target.value)
     }
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
-        try{
-await axios.post()
-        }catch(e){
-console.error(e)
-        }finally{
+        try {
+            await axios.post(`${import.meta.env.VITE_REACT_APP_API}/signup`, {
+                email, password, confirmPassword, name
+            }).then((response) => {
 
+                if(response.status === 200 && response.data.message === "User account created successfully"){
+                    alert("User account created successfully")
+                }
+                
+            })
+        } catch (e) {
+            if (e.response.data.error === "Please fill all required fields") {
+                alert("Please fill all required fields")
+            }
+            else if (e.response.data.error === "Name should be a string") {
+                alert("Name should be a string")
+            } else if (e.response.data.error === "Password should not be less than 8 characters") {
+                alert("Password should not be less than 8 characters")
+            } else if (e.response.data.error === "Passwords do not match") {
+                alert("Passwords do not match")
+            } else if (e.response.data.error === "Email already exists") {
+                alert("Email already exists")
+            } else {
+                alert(e)
+            }
+        } finally {
+            console.log(`finally done`)
+            setName("")
+            setEmail("")
+            setPassword("")
+            setconfirmPassword("")
         }
     }
+
+
     return (
         <>
             <h1>Signup</h1>
@@ -48,8 +75,8 @@ console.error(e)
             </div>
 
             <div>
-                <label htmlFor="Cpassword">Confirm Password</label>
-                <input type="password" id="Cpassword" value={cPassword} onChange={handleCPassword} />
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" value={confirmPassword} onChange={handleconfirmPassword} />
             </div>
 
             <div>
