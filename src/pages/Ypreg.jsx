@@ -15,7 +15,7 @@ const Ypreg = () => {
     const [scholarid, setScholarid] = useState("")
 
     {/* give Event name */}
-    const eventName = "AnnualConference 2024"
+    const eventName = "mockmun"
     console.log(eventName)
 
     const token = Cookies.get('authToken')

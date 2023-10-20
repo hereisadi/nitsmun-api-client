@@ -58,7 +58,7 @@ const AllEventsClient = () => {
                     setRole(response.data.role)
                 })
         }
-    },[])
+    }, [])
 
     useEffect(() => {
         const token = Cookies.get('authToken');
@@ -74,7 +74,7 @@ const AllEventsClient = () => {
                     setAllAccounts(response.data.allAccounts)
                 })
         }
-    },[])
+    }, [])
 
 
     const handleElevateRole = async (accountID) => {
@@ -135,11 +135,11 @@ const AllEventsClient = () => {
                                         <li>{account.role}</li>
                                         <li>{account._id}</li>
                                         <div>
-                                            <button
+                                            <button disabled={account.role === "admin" || account.role === "superadmin"}
                                                 onClick={() => handleElevateRole(account._id)}
                                             >Elevate role to admin</button>
                                         </div>
-                                        <button onClick={() => handleDemoteRole(account._id)}>Demote role to client</button>
+                                        <button disabled={account.role === "client" || account.role === "superadmin"} onClick={() => handleDemoteRole(account._id)}>Demote role to client</button>
                                     </ul>
                                     <hr />
                                 </div>
@@ -185,6 +185,9 @@ const AllEventsClient = () => {
                                     <h1>{event.email}</h1>
                                     <h1>{event.college}</h1>
                                     <h1>{event.batch}</h1>
+                                    {event.cofirmedRegistrationAt === "" && (
+                                        <h1>Confirmed registration at: {event.cofirmedRegistrationAt}</h1>
+                                    )}
                                     <h1>
                                         {event.status === "pending"
                                             ? "Registered but not confirmed yet. Please wait."

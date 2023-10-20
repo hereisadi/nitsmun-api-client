@@ -13,7 +13,7 @@ const YouthParlimentRegistrations = () => {
 
     const [usersRegistered, setUsersRegistered] = useState([])
 
-  
+
 
     useEffect(() => {
         const token
@@ -62,7 +62,7 @@ const YouthParlimentRegistrations = () => {
         } finally {
             ("done")
         }
-    },[eventName])
+    }, [eventName])
 
     {/* Confirm registration */ }
     const handlePublish = async (regID) => {
@@ -123,11 +123,12 @@ const YouthParlimentRegistrations = () => {
                             <h1>{reg.email}</h1>
                             <h1>{reg.scholarid}</h1>
                             <h1>{reg.regsiteredat}</h1>
-                            <h1>{reg.status}</h1>
+                            <h1>{reg.status}  {reg.cofirmedRegistrationAt ? "at" : ""} {reg.cofirmedRegistrationAt ? reg.cofirmedRegistrationAt : ""}
+                            </h1>
                             <div>
-                                <button onClick={(() => handlePublish(reg._id))}>Confirm registration</button>
+                                <button disabled={reg.status === "confirmed"} onClick={(() => handlePublish(reg._id))}>Confirm registration</button>
                             </div>
-                            <button onClick={(() => handleDecline(reg._id))}>Decline registration</button>
+                            <button disabled={reg.status === "confirmed" || reg.status === "declined"} onClick={(() => handleDecline(reg._id))}>Decline registration</button>
                             <hr />
                         </div>
 
