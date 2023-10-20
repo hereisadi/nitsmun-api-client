@@ -61,7 +61,7 @@ const YouthParlimentRegistrations = () => {
         } finally {
             ("done")
         }
-    })
+    },[])
 
     {/* Confirm registration */ }
     const handlePublish = async (regID) => {
@@ -87,7 +87,7 @@ const YouthParlimentRegistrations = () => {
         }
     }
 
-    
+
     {/* Decline registration */ }
 
     const handleDecline = async (regID) => {

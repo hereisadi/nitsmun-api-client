@@ -28,7 +28,7 @@ const Dashboard = () => {
         if (!token) {
             navigate("/")
         }
-    })
+    },[navigate])
 
     const hadnleLogout = () => {
         if (token) {

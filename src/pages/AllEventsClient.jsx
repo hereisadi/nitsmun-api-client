@@ -58,7 +58,7 @@ const AllEventsClient = () => {
                     setRole(response.data.role)
                 })
         }
-    })
+    },[])
 
     useEffect(() => {
         const token = Cookies.get('authToken');
@@ -74,7 +74,7 @@ const AllEventsClient = () => {
                     setAllAccounts(response.data.allAccounts)
                 })
         }
-    })
+    },[])
 
 
     const handleElevateRole = async (accountID) => {

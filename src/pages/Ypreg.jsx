@@ -32,7 +32,7 @@ const Ypreg = () => {
         } else {
             console.log("token is present, good to go")
         }
-    })
+    },[navigate, token])
 
 
     const handleImgChange = (base64) => {
