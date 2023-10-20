@@ -8,8 +8,8 @@ const YouthParlimentRegistrations = () => {
     const navigate = useNavigate()
     const location = useLocation();
     const currentURL = decodeURIComponent(location.pathname);
-    const eventName = currentURL.split("/registartions/")[1];
-    // console.log(eventName)
+    const eventName = currentURL.split("/registrations/")[1];
+
 
     const [usersRegistered, setUsersRegistered] = useState([])
 
@@ -74,7 +74,9 @@ const YouthParlimentRegistrations = () => {
                             <h1>{reg.scholarid}</h1>
                             <h1>{reg.regsiteredat}</h1>
                             <h1>{reg.status}</h1>
+                            <hr />
                         </div>
+                        
                     )
                 })
             ) : (

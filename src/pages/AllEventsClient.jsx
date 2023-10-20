@@ -66,7 +66,13 @@ const AllEventsClient = () => {
             {isAdmin ? (
                 <>
                     <h1>Admin&apos;s Panel here</h1>
-                    <Link to="/registartions/YouthParliament">Youth Parliament&apos;s registrations</Link>
+
+                    <div>
+                        <Link to="/registrations/YouthParliament">Youth Parliament&apos;s registrations</Link>
+                    </div>
+                    <div>
+                        <Link to="/registrations/annual">Annual Conference&apos;s registrations</Link>
+                    </div>
 
                 </>
             ) : (

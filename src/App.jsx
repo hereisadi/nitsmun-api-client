@@ -20,7 +20,9 @@ function App() {
         <Route exact path="/yp" element={<Ypreg />} />
         <Route exact path="/allevents" element={<AllEventsClient />} />
         <Route exact path="/admin" element={<Admin />} />
-        <Route exact path="/registartions/YouthParliament" element={<YouthParlimentRegistrations />} />
+        {/* <Route exact path="/registrations/:eventName" element={<YouthParlimentRegistrations />} /> */}
+        <Route exact path="/registrations/YouthParliament" element={<YouthParlimentRegistrations />} />
+        <Route exact path="/registrations/annual" element={<YouthParlimentRegistrations />} />
       </Routes>
     </Router>
     
