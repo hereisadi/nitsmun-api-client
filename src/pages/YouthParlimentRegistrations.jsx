@@ -13,12 +13,7 @@ const YouthParlimentRegistrations = () => {
 
     const [usersRegistered, setUsersRegistered] = useState([])
 
-    const token = Cookies.get('authToken');
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    };
+  
 
     useEffect(() => {
         const token
@@ -50,6 +45,12 @@ const YouthParlimentRegistrations = () => {
 
 
     useEffect(() => {
+        const token = Cookies.get('authToken');
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        };
         try {
             axios.get(`${import.meta.env.VITE_REACT_APP_API}/admin/getregistered/${eventName}`, config)
                 .then((res) => {
@@ -61,7 +62,7 @@ const YouthParlimentRegistrations = () => {
         } finally {
             ("done")
         }
-    },[])
+    },[eventName])
 
     {/* Confirm registration */ }
     const handlePublish = async (regID) => {
