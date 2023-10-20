@@ -35,7 +35,7 @@ const YouthParlimentRegistrations = () => {
         try {
             axios.get(`${import.meta.env.VITE_REACT_APP_API}/dashboard`, config)
                 .then((res) => {
-                    if (res.data.role !== "admin") {
+                    if (res.data.role !== "admin" && res.data.role !== "superadmin") {
                         navigate("/")
                     }
                 })

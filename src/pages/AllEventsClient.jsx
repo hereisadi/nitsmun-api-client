@@ -11,7 +11,9 @@ const AllEventsClient = () => {
     const pwd = import.meta.env.pwd
 
     const [regEvents, setregEvents] = useState([])
-    const [isAdmin, setIsAdmin] = useState(false)
+    const [role, setRole] = useState("")
+
+    const [allAccounts, setAllAccounts] = useState([])
 
     useEffect(() => {
         const token = Cookies.get('authToken')
@@ -42,7 +44,6 @@ const AllEventsClient = () => {
     }, [navigate, id, pwd])
 
     {/* finding the role of logged in user */ }
-
     useEffect(() => {
         const token = Cookies.get('authToken');
         const config = {
@@ -54,16 +55,112 @@ const AllEventsClient = () => {
         if (token) {
             axios.get(`${import.meta.env.VITE_REACT_APP_API}/dashboard`, config)
                 .then((response) => {
-                    setIsAdmin(response.data.role === "admin" ? true : false)
-                    // console.log(response.data.role)
+                    setRole(response.data.role)
+                })
+        }
+    })
+
+    useEffect(() => {
+        const token = Cookies.get('authToken');
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        };
+
+        if (token) {
+            axios.get(`${import.meta.env.VITE_REACT_APP_API}/superadmin/getallaccounts`, config)
+                .then((response) => {
+                    setAllAccounts(response.data.allAccounts)
                 })
         }
     })
 
 
+    const handleElevateRole = async (accountID) => {
+        const token = Cookies.get('authToken');
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        // console.log(accountID)
+        try {
+            await axios.put(`${import.meta.env.VITE_REACT_APP_API}/elevate/admin`, { accountID }, config)
+                .then((res) => {
+                    if (res.status === 200) {
+                        alert("Role elevated to admin")
+                    }
+                })
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    const handleDemoteRole = async (accountID) => {
+        const token = Cookies.get('authToken');
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        // console.log(accountID)
+        try {
+            await axios.put(`${import.meta.env.VITE_REACT_APP_API}/demote/client`, { accountID }, config)
+                .then((res) => {
+                    if (res.status === 200) {
+                        alert("Role demoted to client")
+                    }
+                })
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+
     return (
         <>
-            {isAdmin ? (
+            {/* Super Admin stuffs */}
+            {role === "superadmin" && (
+                <>
+                    <p>Super Admins dashboard</p>
+                    <br />
+                    {allAccounts.length > 0 ? (
+                        allAccounts.map((account) => {
+                            return (
+                                <div key={account._id}>
+                                    <ul>
+                                        <li>{account.name}</li>
+                                        <li>{account.email}</li>
+                                        <li>{account.role}</li>
+                                        <li>{account._id}</li>
+                                        <div>
+                                            <button
+                                                onClick={() => handleElevateRole(account._id)}
+                                            >Elevate role to admin</button>
+                                        </div>
+                                        <button onClick={() => handleDemoteRole(account._id)}>Demote role to client</button>
+                                    </ul>
+                                    <hr />
+                                </div>
+                            )
+                        })
+                    ) : (<p>No account exists</p>)}
+
+                    <br />
+                    <div>
+                        <Link to="/registrations/YouthParliament">Youth Parliament&apos;s registrations</Link>
+                    </div>
+                    <div>
+                        <Link to="/registrations/annual">Annual Conference&apos;s registrations</Link>
+                    </div>
+                </>
+            )}
+
+
+            {/* Admin stuffs */}
+
+            {role === "admin" && (
                 <>
                     <h1>Admin&apos;s Panel here</h1>
 
@@ -73,9 +170,10 @@ const AllEventsClient = () => {
                     <div>
                         <Link to="/registrations/annual">Annual Conference&apos;s registrations</Link>
                     </div>
-
                 </>
-            ) : (
+            )}
+
+            {role === "client" && (
                 <>
                     <div>AllEventsClient</div>
 
@@ -106,7 +204,6 @@ const AllEventsClient = () => {
                     ) : (<h1>No registrations</h1>)}
                 </>
             )}
-
         </>
     )
 }

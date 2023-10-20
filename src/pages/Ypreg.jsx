@@ -15,7 +15,8 @@ const Ypreg = () => {
     const [scholarid, setScholarid] = useState("")
 
     {/* give Event name */}
-    const eventName = "AnnualConf"
+    const eventName = "AnnualConference 2024"
+    console.log(eventName)
 
     const token = Cookies.get('authToken')
     const config = {
@@ -29,7 +30,7 @@ const Ypreg = () => {
         if (!token) {
             navigate("/")
         } else {
-            console.log("failed to get token")
+            console.log("token is present, good to go")
         }
     })
 
