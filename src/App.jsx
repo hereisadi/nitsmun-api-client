@@ -4,6 +4,8 @@ import Signup from "./pages/Signup"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Ypreg from "./pages/Ypreg";
 import AllEventsClient from "./pages/AllEventsClient";
+import Admin from "./pages/Admin";
+import YouthParlimentRegistrations from "./pages/YouthParlimentRegistrations";
 
 function App() {
  
@@ -17,6 +19,8 @@ function App() {
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/yp" element={<Ypreg />} />
         <Route exact path="/allevents" element={<AllEventsClient />} />
+        <Route exact path="/admin" element={<Admin />} />
+        <Route exact path="/registartions/YouthParliament" element={<YouthParlimentRegistrations />} />
       </Routes>
     </Router>
     

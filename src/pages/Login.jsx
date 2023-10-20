@@ -2,6 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
 import Cookies from 'js-cookie'; 
+import { useEffect } from 'react';
 
 const Login = () => {
 const navigate = useNavigate()
@@ -41,6 +42,15 @@ const navigate = useNavigate()
         // setPassword("")
        }
     }
+
+
+    useEffect(()=>{
+        const token = Cookies.get("authToken")
+        if(token){
+            navigate("/dashboard")
+        }
+    },[navigate])
+
     return (
         <>
             <div>Login</div>

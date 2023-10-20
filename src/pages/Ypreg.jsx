@@ -7,37 +7,29 @@ import FileBase64 from "react-file-base64";
 
 const Ypreg = () => {
     const navigate = useNavigate()
-    const [email, setEmail] = useState("")
-    const [name, setName] = useState("")
+    // const [email, setEmail] = useState("")
+    // const [name, setName] = useState("")
     const [college, setCollege] = useState("")
     const [batch, setBatch] = useState("")
     const [payment, setPayment] = useState("")
     const [scholarid, setScholarid] = useState("")
 
+    {/* give Event name */}
+    const eventName = "AnnualConf"
+
+    const token = Cookies.get('authToken')
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
 
     {/* Fetching the name and email of logged in user for signin up the event */ }
     useEffect(() => {
-        const token = Cookies.get('authToken')
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        };
-
         if (!token) {
             navigate("/")
         } else {
-            try {
-                axios.get(`${import.meta.env.VITE_REACT_APP_API}/dashboard`, config)
-                    .then((res) => {
-                        setName(res.data.name)
-                        setEmail(res.data.email)
-                    })
-            } catch (e) {
-                console.error(e)
-            } finally {
-                console.log('done')
-            }
+            console.log("failed to get token")
         }
     })
 
@@ -52,7 +44,7 @@ const Ypreg = () => {
         e.preventDefault()
 
         try {
-            await axios.post(`${import.meta.env.VITE_REACT_APP_API}/reg/yp`, { name, email, college, batch, scholarid, payment }).then((res) => {
+            await axios.post(`${import.meta.env.VITE_REACT_APP_API}/reg/yp`, {  college, batch, scholarid, payment, eventName }, config).then((res) => {
                 if (res.status === 200 && res.data.message === "Event registration completed") {
                     alert("Event registration completed")
                 } else {
